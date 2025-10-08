@@ -8,30 +8,30 @@ on:
       - 'Lambda/**'
 
 jobs:
-  deploy-lambda: # Name of the job
-    runs-on: unbuntu-latest # Use Ubuntu as the runner environment
+  deploy-lambda:
+    runs-on: unbuntu-latest 
     steps:
       - uses: actions/checkout@v2
       
-      - name: Set up Python # Set up Python environment
+      - name: Set up Python 
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
 
-      - name: Install dependencies # Install dependencies from requirements.txt into Lambda directory
+      - name: Install dependencies 
         run: |
           python -m pip install --upgrade pip
           pip install -r Lambda/requirements.txt -t lambda/
 
-      - name: Configure AWS Credentials # Set up AWS Credentials to allow deployment to Lambda
+      - name: Configure AWS Credentials 
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy Lambda function #Zips Lambda Directory and updates Lambda Function 
+      - name: Deploy Lambda function 
         run: 
-          cd Lambda
+          cd Lambda 
           zip -r lambda_function.zip .
           aws lambda update-function-code --function-name MyTestCICDLabmda --zip-file fileb://lambda_function.zip
