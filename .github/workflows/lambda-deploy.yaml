@@ -7,7 +7,7 @@ on:
     paths:
       - 'Lambda/**'
 
-  jobs:
+jobs:
     deploy-lambda: # Name of the job
       runs-on: unbuntu-latest # Use Ubuntu as the runner environment
       steps:
