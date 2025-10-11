@@ -1,0 +1,7 @@
+import json
+
+def lambda_handler(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from updated Lambda function VScode us east 1!')
+    }
