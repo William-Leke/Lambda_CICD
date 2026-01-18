@@ -1,4 +1,4 @@
-name: deploy aws lambda
+name: deploy aws lambda # name of the github action
 
 on: 
   push:
@@ -35,3 +35,5 @@ jobs: # defines the job to deploy the lambda function
          cd Lambda
          zip -r function.zip .
          aws lambda update-function-code --function-name MyTestCICDLabmda --zip-file fileb://function.zip
+
+
