@@ -1,4 +1,3 @@
-
 name: deploy aws lambda
 
 on: 
@@ -8,31 +7,52 @@ on:
     paths:
       - 'Lambda/'
 
-jobs: # defines the job to deploy the lambda function
+jobs:
   deploy-lambda:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC
+      contents: read
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up python # sets up python 3.12 environment
+      - name: Set up python
         uses: actions/setup-python@v4
-        with:
-        python-version: '3.12'
+        with:   
+          python-version: '3.12'
 
-      - name: Install dependencies # installs dependencies listed in requirements.txt
+      - name: Install dependencies
         run: |
          python -m pip install --upgrade pip
          pip install -r Lambda/requirements.txt
 
-      - name: Configure AWS Credentials # configures aws credentials using secrets stored in github
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
-
-      - name: Deploy to AWS Lambda # zips and deploys the lambda function
+      - name: Run tests  # Added: Run unit tests before deployment
         run: |
          cd Lambda
-         zip -r function.zip .
-         aws lambda update-function-code --function-name My-Test-CICD-Lambda --zip-file fileb://function.zip
+         python -m pytest tests/  # Assumes pytest and tests in Lambda/tests/
+
+      - name: Configure AWS Credentials  # Updated: Use OIDC for security
+        uses: aws-actions/configure-aws-credentials@v4  # Updated version
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsRole  # Replace with your IAM role ARN
+          aws-region: us-east-2
+
+      - name: Check if Lambda function exists  # Added: Check and create if needed
+        id: check-function
+        run: |
+         if aws lambda get-function --function-name My-Test-CICD-Lambda --region us-east-2 > /dev/null 2>&1; then
+           echo "exists=true" >> $GITHUB_OUTPUT
+         else
+           echo "exists=false" >> $GITHUB_OUTPUT
+         fi
+
+      - name: Create Lambda function if not exists  # Added: Create function with basic config
+        if: steps.check-function.outputs.exists == 'false'
+        run: |
+         aws lambda create-function --function-name My-Test-CICD-Lambda --runtime python3.12 --role arn:aws:iam::123456789012:role/lambda-role --handler lambda_function.lambda_handler --code S3Bucket=your-bucket,S3Key=placeholder.zip --region us-east-2  # Adjust role and handler
+
+      - name: Deploy to AWS Lambda
+        run: |
+         cd Lambda
+         zip -r function.zip . -x "*.git*" "*.md" "tests/*"  # Exclude unnecessary files
+         aws lambda update-function-code --function-name My-Test-CICD-Lambda --zip-file fileb://function.zip --region us-east-2
