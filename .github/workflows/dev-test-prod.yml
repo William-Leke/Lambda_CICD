@@ -9,12 +9,14 @@ on:
       - 'Lambda_CICD/**'    
       - 'CloudFormation/**'
       - 'Lambda_Functions/**'
+
 permissions: # sets permissions for the github action
-    contents: read
-    pull-requests: write
+contents: read
+pull-requests: write
+
 jobs: # defines the jobs to be run in the github action
     deploy-dev: # job to deploy to dev environment
-        if: github.ref == 'refs/heads/dev' 
+     if: github.ref == 'refs/heads/dev' 
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v3 
@@ -30,22 +32,22 @@ jobs: # defines the jobs to be run in the github action
             run: |
               aws cloudformation deploy --template-file CloudFormation/s3-bucket.yml --stack-name dev-s3-bucket-stack --parameter-overrides Environment=dev
     
-    deploy-test: # job to deploy to test environment
-        if: github.ref == 'refs/heads/test'
+deploy-test: # job to deploy to test environment
+    if: github.ref == 'refs/heads/test'
         runs-on: ubuntu-latest
         steps: # steps to deploy to test environment
           - uses: actions/checkout@v3   
-            - name: Configure AWS Credentials for Test
-                uses: aws-actions/configure-aws-credentials@v1
-                with:
+          - name: Configure AWS Credentials for Test
+            uses: aws-actions/configure-aws-credentials@v1
+            with:
                 aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_TEST }}
                 aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_TEST }}
                 aws-region: us-east-1
-            - name: Deploy to Test Environment
-                run: | # deploys the cloudformation stack to the test environment
+          - name: Deploy to Test Environment
+            run: | # deploys the cloudformation stack to the test environment
                 aws cloudformation deploy --template-file CloudFormation/s3-bucket.yml --stack-name test-s3-bucket-stack --parameter-overrides Environment=test
     
-    deploy-prod: # job to deploy to prod environment
+deploy-prod: # job to deploy to prod environment
         if: github.ref == 'refs/heads/main' 
         runs-on: ubuntu-latest
         steps:
@@ -60,8 +62,8 @@ jobs: # defines the jobs to be run in the github action
                 run: |
                 aws cloudformation deploy --template-file CloudFormation/s3-bucket.yml --stack-name prod-s3-bucket-stack --parameter-overrides Environment=prod
            
-        - name: Notify Deployment Success # notifies the success of the production deployment
-            uses: actions/github-script@v6
+            - name: Notify Deployment Success # notifies the success of the production deployment
+                uses: actions/github-script@v6
                 with:
                   github-token: ${{secrets.GITHUB_TOKEN}}
                   script: |
@@ -71,7 +73,7 @@ jobs: # defines the jobs to be run in the github action
                       repo: context.repo.repo,
                       body: 'Production deployment successful for stack: prod-s3-bucket-stack'
                     })
-        - name: Delete test stack # deletes the test stack when the pull request is merged
-            run: |
-                aws cloudformation delete-stack --stack-name $stack_name    
-            stack_name="pr-test-stack-${{github.event.pull_request.number}}"    
+             - name: Delete test stack # deletes the test stack when the pull request is merged
+                run: |
+                 aws cloudformation delete-stack --stack-name $stack_name    
+                stack_name="pr-test-stack-${{github.event.pull_request.number}}"    
