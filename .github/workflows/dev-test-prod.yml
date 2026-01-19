@@ -7,8 +7,8 @@ on:
       - test
     paths: # triggers the action only if changes are made to specified paths
       - 'Lambda_CICD/**'    
-        - 'CloudFormation/**'
-        - 'Lambda_Functions/**'
+      - 'CloudFormation/**'
+      - 'Lambda_Functions/**'
 permissions: # sets permissions for the github action
     contents: read
     pull-requests: write
