@@ -15,7 +15,7 @@ contents: read
 pull-requests: write
 
 jobs: # defines the jobs to be run in the github action
-    deploy-dev: # job to deploy to dev environment
+  deploy-dev: # job to deploy to dev environment
      if: github.ref == 'refs/heads/dev' 
      runs-on: ubuntu-latest
      steps:
@@ -73,7 +73,7 @@ deploy-prod: # job to deploy to prod environment
                       repo: context.repo.repo,
                       body: 'Production deployment successful for stack: prod-s3-bucket-stack'
                     })
-         - name: Delete test stack # deletes the test stack when the pull request is merged
+        - name: Delete test stack # deletes the test stack when the pull request is merged
                 run: |
                  aws cloudformation delete-stack --stack-name $stack_name    
                 stack_name="pr-test-stack-${{github.event.pull_request.number}}"    
