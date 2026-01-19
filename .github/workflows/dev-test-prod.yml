@@ -17,7 +17,7 @@ pull-requests: write
 jobs: # defines the jobs to be run in the github action
     deploy-dev: # job to deploy to dev environment
      if: github.ref == 'refs/heads/dev' 
-        runs-on: ubuntu-latest
+     runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v3 
 
