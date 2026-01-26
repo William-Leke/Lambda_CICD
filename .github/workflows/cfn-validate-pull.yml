@@ -4,7 +4,7 @@ name: Validate CloudFormation PR # name of the github action
 on: 
   pull_request:
     paths:
-      - 'CloudFormation/**'
+      - 'lambda_CICD/**'
 
 permissions: # sets permissions for the github action
  pull-requests: write

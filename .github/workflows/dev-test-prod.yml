@@ -1,3 +1,6 @@
+- name: The Code Reviewer
+  uses: fitomad/github-chatgpt-integration@v1.0 
+
 name: Dev-Test-Prod Pipeline # name of the github action
 on:
   push: # triggers the action on push to specified
