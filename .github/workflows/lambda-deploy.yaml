@@ -23,9 +23,9 @@ jobs: # defines the jobs that will run when the workflow is triggered
             - name: Configure AWS Credentials # congigures the AWS credentials using the AWS access key ID and secret access key stored in the repository secrets
               uses: aws-actions/configure-aws-credentials@v1
               with:
-                    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # specify the AWS access key ID from the repository secrets
-                    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # specify the AWS secret access key from the repository secrets
-                    aws-region: us-east-1 # specify the AWS region to deploy to
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # specify the AWS access key ID from the repository secrets
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # specify the AWS secret access key from the repository secrets
+                  aws-region: us-east-1 # specify the AWS region to deploy to
             - name: Deploy Lambda Function # zips the Lambda function and deploys it to AWS
                 run: |
                     cd Lambda
