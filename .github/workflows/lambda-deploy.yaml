@@ -30,7 +30,7 @@ jobs: # defines the jobs that will run when the workflow is triggered
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # specify the AWS secret access key from the repository secrets
           aws-region: us-east-2 
 
-      - name: Deploy Lambda Function # zips the Lambda function and deploys it to AWS
+      - name: Deploy Lambda Function 
         run: |
          cd Lambda
          zip -r function.zip . 
