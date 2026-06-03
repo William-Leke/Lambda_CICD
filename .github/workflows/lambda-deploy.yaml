@@ -1,10 +1,11 @@
-name: Delploy AWS Lambda Function # name of the workflow, which will be displayed in the Actions tab of your repository
+name: Deploy AWS Lambda Function # name of the workflow, which will be displayed in the Actions tab of your repository
+
 on:
-    push: # defines the events that will trigger the workflow (push, pull_request, etc.)
-        branches: # specify the branch to trigger the workflow on
-            - main # specify the branch to trigger the workflow on
-        paths:
-            - 'lambda/' # specify the path to trigger the workflow on
+  push: # defines the events that will trigger the workflow (push, pull_request, etc.)
+    branches: # specify the branch to trigger the workflow on
+      - main # specify the branch to trigger the workflow on
+    paths:
+      - 'lambda/' # specify the path to trigger the workflow on
 
 jobs: # defines the jobs that will run when the workflow is triggered
     deploy_lambda: 
