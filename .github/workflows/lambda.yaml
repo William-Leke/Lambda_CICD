@@ -17,10 +17,12 @@ jobs: # defines the jobs that will run when the workflow is triggered
               uses: actions/setup-python@v2
               with:
                 python-version: '3.8' # specify the Python version to use
+
             - name: install dependencies # installs the dependencies specified in the requirements.txt file
               run: |
                 python -m pip install --upgrade pip
                 pip install -r requirements.txt -t lambda/
+                
             - name: Configure AWS Credentials # congigures the AWS credentials using the AWS access key ID and secret access key stored in the repository secrets
               uses: aws-actions/configure-aws-credentials@v1
               with:
