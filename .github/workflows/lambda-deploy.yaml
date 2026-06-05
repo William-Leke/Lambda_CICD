@@ -34,4 +34,4 @@ jobs: # defines the jobs that will run when the workflow is triggered
         run: |
          cd Lambda
          zip -r function.zip . 
-         aws lambda update-function-code --function-name my-lambda-function --zip-file fileb://function.zip 
+         aws lambda update-function-code --function-name MyTestCICDLabmda --zip-file fileb://function.zip 
