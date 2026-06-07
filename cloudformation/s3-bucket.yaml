@@ -21,7 +21,10 @@ Resources:
 
         - Key: Environment
           Value: GithubActionsTesting
-          
+
+        - Key: Owner
+          Value: YourName
+
 Outputs:
   BucketName:
     Description: 'The name of the S3 bucket'
