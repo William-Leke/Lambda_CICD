@@ -21,6 +21,9 @@ Resources:
 
         - Key: Environment
           Value: GithubActionsTesting
+        
+        - Key: Owner
+          Value: Lambda Team
 
 Outputs:
   BucketName:
