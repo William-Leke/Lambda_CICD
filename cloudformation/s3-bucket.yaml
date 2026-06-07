@@ -20,7 +20,8 @@ Resources:
           Value: !Ref Environment
         - Key: Environment
           Value: GithubActionsTesting
-        
+        - Key: Environment
+          Value: CICD
 Outputs:
   BucketName:
     Description: 'The name of the S3 bucket'
