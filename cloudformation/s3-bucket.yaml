@@ -22,8 +22,8 @@ Resources:
         - Key: Environment
           Value: GithubActionsTesting
         
-        - Key: Environment
-          Value: CICD
+        - Key: Owner
+          Value: YourName
 
 Outputs:
   BucketName:
