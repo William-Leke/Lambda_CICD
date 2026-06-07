@@ -32,8 +32,10 @@ jobs:
           echo "STACK_NAME=$stack_name" >> $GITHUB_ENV
           aws cloudformation create-stack --stack-name $stack_name --template-body file://cloudformation/s3-bucket.yaml --parameters ParameterKey=Environment,ParameterValue=test
 
-      - name: comment on PR
+            - name: comment on PR
         uses: actions/github-script@v6
+        env:
+          STACK_NAME: ${{ env.STACK_NAME }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -41,8 +43,9 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `CloudFormation template validated and stack ${stack_name} created successfully!`
+              body: `CloudFormation template validated and stack ${process.env.STACK_NAME} created successfully!`
             })
+              
   cleanup-on-merge:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true

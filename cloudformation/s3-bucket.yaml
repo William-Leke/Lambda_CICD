@@ -20,6 +20,8 @@ Resources:
           Value: !Ref Environment
         - Key: Environment
           Value: GithubActionsTesting
+        - Key: Environment
+          Value: CICD
         
 Outputs:
   BucketName:
