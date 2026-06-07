@@ -18,13 +18,11 @@ Resources:
       Tags:
         - Key: Environment
           Value: !Ref Environment
-          
         - Key: Environment
           Value: GithubActionsTesting
+        - Key: Environment
+          Value: CICD
         
-        - Key: Owner
-          Value: YourName
-
 Outputs:
   BucketName:
     Description: 'The name of the S3 bucket'
