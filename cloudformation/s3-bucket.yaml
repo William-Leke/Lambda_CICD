@@ -1,4 +1,4 @@
-AWSTemplateVersion: '2010-09-09'
+AWSTemplateFormatVersion: '2010-09-09'
 Description: s3 bucket for our CICD PR
 
 Parameters:
