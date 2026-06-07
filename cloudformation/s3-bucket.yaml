@@ -18,11 +18,8 @@ Resources:
       Tags:
         - Key: Environment
           Value: !Ref Environment
-        - key: environment
-          value: GithubActionsTesting
-        
-        
-
+        - Key: Environment
+          Value: GithubActionsTesting
 Outputs:
   BucketName:
     Description: 'The name of the S3 bucket'
