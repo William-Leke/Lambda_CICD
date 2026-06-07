@@ -20,6 +20,8 @@ Resources:
           Value: !Ref Environment
         - Key: Environment
           Value: GithubActionsTesting
+        - Key: Owner
+          Value: President
         
         
 Outputs:
