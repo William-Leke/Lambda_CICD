@@ -18,10 +18,9 @@ Resources:
       Tags:
         - Key: Environment
           Value: !Ref Environment
+          
         - Key: Environment
           Value: GithubActionsTesting
-        - Key: Owner
-          Value: LambdaWorkflows
 
 Outputs:
   BucketName:
